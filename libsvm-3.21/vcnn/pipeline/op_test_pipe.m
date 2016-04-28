@@ -1,6 +1,6 @@
 function op_test_pipe(in, gt_out)
     global config mem;
-    
+% test只有前向传播
     % forward pass
     config.misc.training = 0;
     mem.GT_output = gt_out;

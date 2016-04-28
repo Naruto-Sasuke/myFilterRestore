@@ -86,15 +86,17 @@ function simuBtn_Callback(hObject, eventdata, handles)
             if strcmp(GUImodelType,GUICNNfilterList{i})
                 speFilter = GUICNNfilterList{i};
                 % 这里调用VCNN的model
-                matGUICNN(speFilter,i);
+                steps = 1000;
+                h = msgbox('该过程可能需要十几秒...');
+                pause(1);
+                close(h);
+                matGUICNN(speFilter,i);               
                 break;
             end
         end
 
     end
         
-
-
 function filterPop_Callback(hObject, eventdata, handles)
 sel1 = get(hObject,'value') - 1;
 global GUIfilterList GUImodelType GUIindexStr  GUIfimgOri GUIoriImg;
@@ -161,17 +163,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in showPreModelBtn.
-function showPreModelBtn_Callback(hObject, eventdata, handles)
-figure;
-[model,trainHist] = loadPreModel;
-surf(trainHist);
-axis([0 255 0 120 0 0.6]);    %如果加入新的效果需要更改
-xlabel('像素值');
-ylabel('图片编号');
-zlabel('频率');
-title('预测模型','FontName','Microsoft YaHei UI', 'FontSize', 13,'Color','b');
-% 以后加入更多的关于model的信息吧，看看能不能把训练参数加入。
 
 
 
@@ -238,32 +229,32 @@ global GUImodelType GUICNNfilterList GUIoriImg GUIfimgOri;
 if sel3 ~= 0
     if sel3 == 1  %锐化图
         GUImodelType = GUICNNfilterList{sel3};
-        GUIoriImg = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena.jpg'));
-        GUIfimgOri = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena-rh.jpg'));
+        GUIoriImg = im2double(imread('vcnn/applications/filterRestore/images/lena.jpg'));
+        GUIfimgOri = im2double(imread('vcnn/applications/filterRestore/images/lena-rh.jpg'));
         image(GUIfimgOri,'Parent',handles.imgfAxes);    % 显示滤镜图
         image(GUIoriImg,'Parent',handles.imgAxes);
     elseif sel3 == 2 %砖墙图
         GUImodelType = GUICNNfilterList{sel3};
-        GUIoriImg = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena.jpg'));
-        GUIfimgOri = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena-zuanqiang.jpg'));
+        GUIoriImg = im2double(imread('vcnn/applications/filterRestore/images/lena.jpg'));
+        GUIfimgOri = im2double(imread('vcnn/applications/filterRestore/images/lena-zuanqiang.jpg'));
         image(GUIfimgOri,'Parent',handles.imgfAxes);    % 显示滤镜图
         image(GUIoriImg,'Parent',handles.imgAxes);
     elseif sel3 == 3 %马赛克
         GUImodelType = GUICNNfilterList{sel3};
-        GUIoriImg = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena.jpg'));
-        GUIfimgOri = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena-psMasic4.jpg'));
+        GUIoriImg = im2double(imread('vcnn/applications/filterRestore/images/lena.jpg'));
+        GUIfimgOri = im2double(imread('vcnn/applications/filterRestore/images/lena-psMasic4.jpg'));
         image(GUIfimgOri,'Parent',handles.imgfAxes);    % 显示滤镜图
         image(GUIoriImg,'Parent',handles.imgAxes);
     elseif sel3 == 4 %电视扫描线
         GUImodelType = GUICNNfilterList{sel3};
-        GUIoriImg = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena.jpg'));
-        GUIfimgOri = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena-dssmx.jpg'));
+        GUIoriImg = im2double(imread('vcnn/applications/filterRestore/images/lena.jpg'));
+        GUIfimgOri = im2double(imread('vcnn/applications/filterRestore/images/lena-dssmx.jpg'));
         image(GUIfimgOri,'Parent',handles.imgfAxes);    % 显示滤镜图
         image(GUIoriImg,'Parent',handles.imgAxes);
     elseif sel3 == 5 %高斯模糊
         GUImodelType = GUICNNfilterList{sel3};
-        GUIoriImg = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena.jpg'));
-        GUIfimgOri = im2double(imread('vcnn/applications/deep_edge_aware_filters/images/lena-GuassBlur.jpg'));
+        GUIoriImg = im2double(imread('vcnn/applications/filterRestore/images/lena.jpg'));
+        GUIfimgOri = im2double(imread('vcnn/applications/filterRestore/images/lena-GuassBlur.jpg'));
         image(GUIfimgOri,'Parent',handles.imgfAxes);    % 显示滤镜图
         image(GUIoriImg,'Parent',handles.imgAxes);
     end   

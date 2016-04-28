@@ -2,13 +2,15 @@ function init_gpu(device_index)
 
 global config data;
 
-config.gpu.enable = 1;%getvalue(config, 'gpu.enable', 0);
+config.gpu.enable = 1;
 
 if ~config.gpu.enable && nargin == 0
     return
 end
 
 reinit = 0;
+
+% …Ë÷√device_index≤¢«“±‡“Îim2col
 
 if nargin == 0
     device_index = getvalue(data, 'gpu.device_index', 1);
@@ -36,7 +38,7 @@ if isempty(dev) || dev.Index ~= device_index
     reinit = 1;
 end
 
-precision = 'single';%getvalue(config.gpu, 'precision', 'double');
+precision = 'single';
 if ~strcmp(precision, data.gpu.float_t)
     data.gpu.float_t = precision;
     reinit = 1;

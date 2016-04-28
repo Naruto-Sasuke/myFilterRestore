@@ -1,10 +1,16 @@
 function conv2conv_mem(layer_idx)
+% 主要进行mem.conv2conv的初始化
     global config mem;
-    conv_layer_idx = get_conv_layer_idx_from_layer_idx(layer_idx+1);
+    conv_layer_idx = get_conv_layer_idx_from_layer_idx(layer_idx+1);  % conv_layer_idx = 2
+    % valid_kernel_num是（feature_map_size{1}*batch_size),即mem.layer_inputs的第二维
     valid_kernel_num = (config.feature_map_sizes{layer_idx}(1)-config.kernel_size(conv_layer_idx, 1)+1)* ...
                        (config.feature_map_sizes{layer_idx}(2)-config.kernel_size(conv_layer_idx, 2)+1);
+    % valid_kernel_num2 是feature_map_size{1}的底面积（除了厚度），即mem.activations的第二维
     valid_kernel_num2 = (config.feature_map_sizes{layer_idx}(1)-config.kernel_size(conv_layer_idx, 1)+1)* ...
                         (config.feature_map_sizes{layer_idx}(2)*2-config.kernel_size(conv_layer_idx, 2)+1);
+    % 此时invalid_kernel_num为0   
+    
+    % 
     invalid_kernel_num = valid_kernel_num2 - 2 * valid_kernel_num;
     rm_idx = 1:config.kernel_size(conv_layer_idx, 1)*config.kernel_size(conv_layer_idx, 2)*config.feature_map_sizes{layer_idx}(3)*valid_kernel_num*config.batch_size;
     RM = reshape(rm_idx, config.kernel_size(conv_layer_idx, 1)*config.kernel_size(conv_layer_idx, 2)*config.feature_map_sizes{layer_idx}(3), ...

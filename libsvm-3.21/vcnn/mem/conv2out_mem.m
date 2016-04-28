@@ -1,4 +1,5 @@
 function conv2out_mem()
+
     global config mem;
     idx = reshape(1:config.output_size(1) * config.output_size(2), config.output_size(1), config.output_size(2));
     idx = im2col(idx, config.kernel_size(size(config.kernel_size, 1), :));
